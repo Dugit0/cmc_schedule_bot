@@ -40,6 +40,12 @@ def command_any(message):
     bot.send_message(message.chat.id, "Day?", reply_markup=markup)
 
 
+@bot.callback_query_handler(func=lambda call: True)
+def handle_query(call):
+    day = int(call.data) - 1
+    bot.send_message(call.message.chat.id, schedule[day], "Markdown")
+
+
 @bot.message_handler(commands=["names"])
 def command_names(message):
     bot.send_message(message.chat.id, "TODO")
