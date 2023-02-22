@@ -28,7 +28,7 @@ def open_schedule():
     return schedule
 
 schedule = open_schedule()
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(os.getenv("BOT_TOKEN"))
 
 @bot.message_handler(commands=["today"])
 def command_today(message):
