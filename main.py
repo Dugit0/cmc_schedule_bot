@@ -1,6 +1,5 @@
 from datetime import timezone
 import datetime
-import config
 import telebot
 import os
 
