@@ -1,5 +1,7 @@
 __pycache__/
 telegram/
+env/
+venv/
 config.py
 bot_settings.txt
 archive/from_go_to_py.py
