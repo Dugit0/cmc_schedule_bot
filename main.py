@@ -3,6 +3,7 @@ import datetime
 import config
 import telebot
 import os
+import logging
 
 
 
@@ -15,6 +16,14 @@ current_bot_mod = allouds_mods[0]
 
 
 def open_schedule():
+    """
+    Returns
+    -------
+    schedule : list of strings
+        list of schedules for each day.
+
+    """
+    global schedules_path, current_bot_mod
     with open(os.path.join(schedules_path, current_bot_mod + ".txt"), encoding="utf-8") \
             as schedule_file:
         lines = schedule_file.readlines()
@@ -27,11 +36,16 @@ def open_schedule():
             count += 1
     return schedule
 
+
 schedule = open_schedule()
 bot = telebot.TeleBot(config.token)
+logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a", 
+                    format="%(asctime)s:%(levelname)s:%(message)s")
+logging.info(": Start bot")
 
 @bot.message_handler(commands=["today"])
 def command_today(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /today")
     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
     day = cur_date.weekday()
     bot.send_message(message.chat.id, schedule[day], "Markdown")
@@ -39,6 +53,7 @@ def command_today(message):
 
 @bot.message_handler(commands=["tomorrow"])
 def command_tomorrow(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /tomorrow")
     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
     day = cur_date.weekday()
     bot.send_message(message.chat.id, schedule[(day + 1) % 7], "Markdown")
@@ -46,6 +61,7 @@ def command_tomorrow(message):
 
 @bot.message_handler(commands=["any"])
 def command_any(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /any")
     markup = telebot.types.InlineKeyboardMarkup()
     buttons = [telebot.types.InlineKeyboardButton(f"{i}", callback_data=f"any_{i}") for i in range(1, 8)]
     markup.row(*buttons)
@@ -54,12 +70,14 @@ def command_any(message):
 
 @bot.message_handler(commands=["week"])
 def command_week(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /week")
     for day in range(7):
         bot.send_message(message.chat.id, schedule[day], "Markdown")
 
 
 @bot.message_handler(commands=["changemod"])
 def command_changemod(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /changemod")
     markup = telebot.types.InlineKeyboardMarkup()
     for mod in allouds_mods:
         button = telebot.types.InlineKeyboardButton(f"{mod}", callback_data=f"mod_{mod}")    
@@ -77,6 +95,7 @@ def handle_query(call):
         current_bot_mod = call.data[4:]
         schedule = open_schedule()
         bot.send_message(call.message.chat.id, f"Вы выбрали расписание группы {current_bot_mod}")
+        logging.info(f"CHAT_ID is {call.message.chat.id}: Mod changed to {current_bot_mod}")
         
 
 bot.infinity_polling()
