@@ -38,6 +38,8 @@ def open_schedule():
 
 
 schedule = open_schedule()
+with open("names.txt", encoding="utf-8") as names_file:
+    names = names_file.read()
 bot = telebot.TeleBot(config.token)
 logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a", 
                     format="%(asctime)s:%(levelname)s:%(message)s")
@@ -96,7 +98,13 @@ def handle_query(call):
         schedule = open_schedule()
         bot.send_message(call.message.chat.id, f"Вы выбрали расписание группы {current_bot_mod}")
         logging.info(f"CHAT_ID is {call.message.chat.id}: Mod changed to {current_bot_mod}")
-        
+
+
+@bot.message_handler(commands=["names"])
+def command_names(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /names")
+    bot.send_message(message.chat.id, names, "html")
+
 
 bot.infinity_polling()
 
