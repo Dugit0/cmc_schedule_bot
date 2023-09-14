@@ -1,0 +1,9 @@
+today - today
+tomorrow - tomorrow
+any - any <day>
+ours_today - ours today
+ours_tomorrow - ours tomorrow
+ours_any - ours any <day>
+week - week
+changemod - change mod
+names - get names
