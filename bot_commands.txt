@@ -7,3 +7,4 @@ ours_any - ours any <day>
 week - week
 changemod - change mod
 names - get names
+week_parity - week parity

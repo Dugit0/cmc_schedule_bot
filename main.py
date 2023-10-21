@@ -149,6 +149,18 @@ def command_names(message):
     bot.send_message(message.chat.id, names, "html")
 
 
+@bot.message_handler(commands=["week_parity"])
+def command_week_parity(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /week_parity")
+    cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
+    week = cur_date.isocalendar().week
+    if week % 2:
+        message_text = "```\nПредмет / ---\n```"
+        bot.send_message(message.chat.id, message_text, "Markdown")
+    else:
+        message_text = "```\n--- / Предмет\n```"
+        bot.send_message(message.chat.id, message_text, "Markdown")
+
 bot.infinity_polling()
 
 print(0)
