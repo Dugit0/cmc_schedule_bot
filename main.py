@@ -83,31 +83,31 @@ def command_any(message):
     bot.send_message(message.chat.id, "Day?", reply_markup=markup)
 
 
-@bot.message_handler(commands=["ours_today"])
-def command_ours_today(message):
-    logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_today")
-    cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
-    day = cur_date.weekday()
-    bot.send_message(message.chat.id, schedule["Phil237"][day], "Markdown")
-    bot.send_message(message.chat.id, schedule["CMC321"][day], "Markdown")
+# @bot.message_handler(commands=["ours_today"])
+# def command_ours_today(message):
+#     logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_today")
+#     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
+#     day = cur_date.weekday()
+#     bot.send_message(message.chat.id, schedule["Phil237"][day], "Markdown")
+#     bot.send_message(message.chat.id, schedule["CMC321"][day], "Markdown")
 
 
-@bot.message_handler(commands=["ours_tomorrow"])
-def command_ours_tomorrow(message):
-    logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_tomorrow")
-    cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
-    day = cur_date.weekday()
-    bot.send_message(message.chat.id, schedule["Phil237"][(day + 1) % 7], "Markdown")
-    bot.send_message(message.chat.id, schedule["CMC321"][(day + 1) % 7], "Markdown")
+# @bot.message_handler(commands=["ours_tomorrow"])
+# def command_ours_tomorrow(message):
+#     logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_tomorrow")
+#     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
+#     day = cur_date.weekday()
+#     bot.send_message(message.chat.id, schedule["Phil237"][(day + 1) % 7], "Markdown")
+#     bot.send_message(message.chat.id, schedule["CMC321"][(day + 1) % 7], "Markdown")
 
 
-@bot.message_handler(commands=["ours_any"])
-def command_ours_any(message):
-    logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_any")
-    markup = telebot.types.InlineKeyboardMarkup()
-    buttons = [telebot.types.InlineKeyboardButton(f"{i}", callback_data=f"ours_any_{i}") for i in range(1, 8)]
-    markup.row(*buttons)
-    bot.send_message(message.chat.id, "Day?", reply_markup=markup)
+# @bot.message_handler(commands=["ours_any"])
+# def command_ours_any(message):
+#     logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_any")
+#     markup = telebot.types.InlineKeyboardMarkup()
+#     buttons = [telebot.types.InlineKeyboardButton(f"{i}", callback_data=f"ours_any_{i}") for i in range(1, 8)]
+#     markup.row(*buttons)
+#     bot.send_message(message.chat.id, "Day?", reply_markup=markup)
 
 
 @bot.message_handler(commands=["week"])
