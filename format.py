@@ -1,4 +1,5 @@
 # ------------- CMC321 -------------
+schedule_name = 'CMC321'
 subjects = [
     [
         [''],
@@ -17,7 +18,7 @@ subjects = [
         ['Методы машинного обучения', 'П-13'],
         ['Формальные языки и автоматы', 'П-12'],
         [''],
-        ['МФК']
+        ['Спец семинар', '???']
     ],
     [
         [''],
@@ -56,6 +57,8 @@ times = [
 
 
 
+import os
+
 
 def add_str(arr, max_len, template_str):
     for i in range(len(arr), max_len):
@@ -80,7 +83,7 @@ def split(s, max_len):
 
 
 char_in_str = 21
-f_out = open("schedule.txt", "w", encoding="utf-8")
+f_out = open(os.path.join('schedules', schedule_name + '.txt'), "w", encoding="utf-8")
 for day in range(7):
     # print(f"-------------- day {day + 1} --------------")
     # print(f"/set {day + 1}")
