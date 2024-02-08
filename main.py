@@ -154,7 +154,7 @@ def command_week_parity(message):
     logging.info(f"CHAT_ID is {message.chat.id}: Call /week_parity")
     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
     week = cur_date.isocalendar().week
-    if week % 2:
+    if week % 2 == 0:
         message_text = "```\nПредмет / ---\n```"
         bot.send_message(message.chat.id, message_text, "Markdown")
     else:
