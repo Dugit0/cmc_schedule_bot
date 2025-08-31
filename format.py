@@ -1,6 +1,10 @@
-schedule_name = 'Geo308'
-from schedule_source import subjects_Geo308 as subjects
-from schedule_source import times_Geo308 as times
+schedule_name = 'CMCm124'
+from schedule_source import subjects_CMCm124 as subjects
+from schedule_source import times_CMCm124 as times
+
+# schedule_name = 'Geo308'
+# from schedule_source import subjects_Geo308 as subjects
+# from schedule_source import times_Geo308 as times
 
 # schedule_name = 'CMC303'
 # from schedule_source import subjects_CMC303 as subjects
