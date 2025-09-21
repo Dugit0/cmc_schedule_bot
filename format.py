@@ -1,10 +1,12 @@
+from schedule_source import schedules
+
 # schedule_name = 'CMCm124'
 # from schedule_source import subjects_CMCm124 as subjects
 # from schedule_source import times_CMCm124 as times
 
-schedule_name = 'Geo408'
-from schedule_source import subjects_Geo408 as subjects
-from schedule_source import times_Geo408 as times
+# schedule_name = 'Geo408'
+# from schedule_source import subjects_Geo408 as subjects
+# from schedule_source import times_Geo408 as times
 
 # schedule_name = 'CMC403'
 # from schedule_source import subjects_CMC403 as subjects
@@ -40,27 +42,31 @@ def split(s, max_len):
     return res
 
 
-char_in_str = 21
-f_out = open(os.path.join('schedules', schedule_name + '.txt'), "w", encoding="utf-8")
-for day in range(7):
-    # print(f"-------------- day {day + 1} --------------")
-    # print(f"/set {day + 1}")
+def format(schedule_name, subjects, times):
+    char_in_str = 21
+    f_out = open(os.path.join('schedules', schedule_name + '.txt'), "w", encoding="utf-8")
+    for day in range(7):
+        # print(f"-------------- day {day + 1} --------------")
+        # print(f"/set {day + 1}")
+        print("#", file=f_out)
+        flag_separator = False
+        print("```", file=f_out)
+        for time, subj in zip(times[day], subjects[day]):
+            if flag_separator:
+                print("-------------", file=f_out)
+            flag_separator = True
+            new_subj = []
+            for i in range(len(subj)):
+                new_subj.extend(split(subj[i], char_in_str))
+            subj = new_subj
+            max_len = max(len(time), len(subj))
+            add_str(time, max_len, "     ")
+            add_str(subj, max_len, "")
+            for i, j in zip(time, subj):
+                print(f"{i} | {j}", file=f_out)
+        print("```", file=f_out)
     print("#", file=f_out)
-    flag_separator = False
-    print("```", file=f_out)
-    for time, subj in zip(times[day], subjects[day]):
-        if flag_separator:
-            print("-------------", file=f_out)
-        flag_separator = True
-        new_subj = []
-        for i in range(len(subj)):
-            new_subj.extend(split(subj[i], char_in_str))
-        subj = new_subj
-        max_len = max(len(time), len(subj))
-        add_str(time, max_len, "     ")
-        add_str(subj, max_len, "")
-        for i, j in zip(time, subj):
-            print(f"{i} | {j}", file=f_out)
-    print("```", file=f_out)
-print("#", file=f_out)
-f_out.close()
+    f_out.close()
+
+for key in schedules:
+    format(key, schedules[key][0], schedules[key][1])
