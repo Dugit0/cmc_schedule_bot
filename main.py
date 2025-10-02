@@ -54,7 +54,7 @@ schedule = open_schedule()
 with open("names.txt", encoding="utf-8") as names_file:
     names = names_file.read()
 bot = telebot.TeleBot(config.token)
-logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a", 
+logging.basicConfig(level=logging.INFO, filename="log.log", filemode="a",
                     format="%(asctime)s:%(levelname)s:%(message)s")
 logging.info(": Start bot")
 
@@ -83,31 +83,31 @@ def command_any(message):
     bot.send_message(message.chat.id, "Day?", reply_markup=markup)
 
 
-# @bot.message_handler(commands=["ours_today"])
-# def command_ours_today(message):
-#     logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_today")
-#     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
-#     day = cur_date.weekday()
-#     bot.send_message(message.chat.id, schedule["Phil237"][day], "Markdown")
-#     bot.send_message(message.chat.id, schedule["CMC321"][day], "Markdown")
+@bot.message_handler(commands=["ours_today"])
+def command_ours_today(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_today")
+    cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
+    day = cur_date.weekday()
+    bot.send_message(message.chat.id, schedule["Geo408"][day], "Markdown")
+    bot.send_message(message.chat.id, schedule["CMCm125"][day], "Markdown")
 
 
-# @bot.message_handler(commands=["ours_tomorrow"])
-# def command_ours_tomorrow(message):
-#     logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_tomorrow")
-#     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
-#     day = cur_date.weekday()
-#     bot.send_message(message.chat.id, schedule["Phil237"][(day + 1) % 7], "Markdown")
-#     bot.send_message(message.chat.id, schedule["CMC321"][(day + 1) % 7], "Markdown")
+@bot.message_handler(commands=["ours_tomorrow"])
+def command_ours_tomorrow(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_tomorrow")
+    cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
+    day = cur_date.weekday()
+    bot.send_message(message.chat.id, schedule["Geo408"][(day + 1) % 7], "Markdown")
+    bot.send_message(message.chat.id, schedule["CMCm125"][(day + 1) % 7], "Markdown")
 
 
-# @bot.message_handler(commands=["ours_any"])
-# def command_ours_any(message):
-#     logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_any")
-#     markup = telebot.types.InlineKeyboardMarkup()
-#     buttons = [telebot.types.InlineKeyboardButton(f"{i}", callback_data=f"ours_any_{i}") for i in range(1, 8)]
-#     markup.row(*buttons)
-#     bot.send_message(message.chat.id, "Day?", reply_markup=markup)
+@bot.message_handler(commands=["ours_any"])
+def command_ours_any(message):
+    logging.info(f"CHAT_ID is {message.chat.id}: Call /ours_any")
+    markup = telebot.types.InlineKeyboardMarkup()
+    buttons = [telebot.types.InlineKeyboardButton(f"{i}", callback_data=f"ours_any_{i}") for i in range(1, 8)]
+    markup.row(*buttons)
+    bot.send_message(message.chat.id, "Day?", reply_markup=markup)
 
 
 @bot.message_handler(commands=["week"])
@@ -122,7 +122,7 @@ def command_changemod(message):
     logging.info(f"CHAT_ID is {message.chat.id}: Call /changemod")
     markup = telebot.types.InlineKeyboardMarkup()
     for mod in allouds_mods:
-        button = telebot.types.InlineKeyboardButton(f"{mod}", callback_data=f"mod_{mod}")    
+        button = telebot.types.InlineKeyboardButton(f"{mod}", callback_data=f"mod_{mod}")
         markup.add(button)
     bot.send_message(message.chat.id, "Mod?", reply_markup=markup)
 
@@ -139,8 +139,8 @@ def handle_query(call):
         logging.info(f"CHAT_ID is {call.message.chat.id}: Mod changed to {mods_for_chats[call.message.chat.id]}")
     elif call.data[:8] == "ours_any":
         day = int(call.data[9:]) - 1
-        bot.send_message(call.message.chat.id, schedule["Phil237"][day], "Markdown")
-        bot.send_message(call.message.chat.id, schedule["CMC321"][day], "Markdown")
+        bot.send_message(call.message.chat.id, schedule["Geo408"][day], "Markdown")
+        bot.send_message(call.message.chat.id, schedule["CMCm125"][day], "Markdown")
 
 
 @bot.message_handler(commands=["names"])
