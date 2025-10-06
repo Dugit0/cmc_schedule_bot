@@ -89,7 +89,7 @@ def command_ours_today(message):
     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
     day = cur_date.weekday()
     bot.send_message(message.chat.id, schedule["Geo408"][day], "Markdown")
-    bot.send_message(message.chat.id, schedule["CMCm125"][day], "Markdown")
+    bot.send_message(message.chat.id, schedule["CMC525"][day], "Markdown")
 
 
 @bot.message_handler(commands=["ours_tomorrow"])
@@ -98,7 +98,7 @@ def command_ours_tomorrow(message):
     cur_date = datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=3)
     day = cur_date.weekday()
     bot.send_message(message.chat.id, schedule["Geo408"][(day + 1) % 7], "Markdown")
-    bot.send_message(message.chat.id, schedule["CMCm125"][(day + 1) % 7], "Markdown")
+    bot.send_message(message.chat.id, schedule["CMC525"][(day + 1) % 7], "Markdown")
 
 
 @bot.message_handler(commands=["ours_any"])
@@ -140,7 +140,7 @@ def handle_query(call):
     elif call.data[:8] == "ours_any":
         day = int(call.data[9:]) - 1
         bot.send_message(call.message.chat.id, schedule["Geo408"][day], "Markdown")
-        bot.send_message(call.message.chat.id, schedule["CMCm125"][day], "Markdown")
+        bot.send_message(call.message.chat.id, schedule["CMC525"][day], "Markdown")
 
 
 @bot.message_handler(commands=["names"])
