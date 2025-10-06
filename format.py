@@ -1,22 +1,5 @@
 from schedule_source import schedules
 
-# schedule_name = 'CMCm124'
-# from schedule_source import subjects_CMCm124 as subjects
-# from schedule_source import times_CMCm124 as times
-
-# schedule_name = 'Geo408'
-# from schedule_source import subjects_Geo408 as subjects
-# from schedule_source import times_Geo408 as times
-
-# schedule_name = 'CMC403'
-# from schedule_source import subjects_CMC403 as subjects
-# from schedule_source import times_CMC403 as times
-
-# schedule_name = 'Mex405'
-# from schedule_source import subjects_Mex405 as subjects
-# from schedule_source import times_Mex405 as times
-
-
 import os
 
 
@@ -45,11 +28,11 @@ def split(s, max_len):
 def format(schedule_name, subjects, times):
     char_in_str = 21
     f_out = open(os.path.join('schedules', schedule_name + '.txt'), "w", encoding="utf-8")
+    names_of_days = {0: 'Пн', 1: 'Вт', 2: 'Ср', 3: 'Чт', 4: 'Пт', 5: 'Сб', 6: 'Вс'}
     for day in range(7):
-        # print(f"-------------- day {day + 1} --------------")
-        # print(f"/set {day + 1}")
         print("#", file=f_out)
         flag_separator = False
+        print(f"*{names_of_days[day]} | {schedule_name}*", file=f_out)
         print("```", file=f_out)
         for time, subj in zip(times[day], subjects[day]):
             if flag_separator:
